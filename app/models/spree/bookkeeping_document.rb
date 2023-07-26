@@ -107,10 +107,9 @@ module Spree
     # Assigns +@doc+ instance variable
     #
     def render_pdf
-      ApplicationController.render(
-        template: "#{template_name}.pdf.prawn",
-        assigns: { doc: self }
-      )
+      controller = ApplicationController.new
+      view = ActionView::Base.new(ActionController::Base.view_paths, {}, controller)
+      view.render(template: "#{template_name}.pdf.prawn", locals: { doc: self })
     end
 
     private
